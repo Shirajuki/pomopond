@@ -48,7 +48,7 @@ const PopupHandler = ({ popup }: IPopupHandler) => {
 };
 
 export const App = () => {
-  const [screen, setScreen] = useState(0);
+  const [screen, setScreen] = useState(1);
   const [popups, setPopups] = useState<Number[]>([]);
   return (
     <>

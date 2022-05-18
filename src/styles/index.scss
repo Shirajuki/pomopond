@@ -30,7 +30,7 @@ body {
     left: 0;
     display: flex;
     justify-content: space-between;
-    padding: 0 5%;
+    padding: 0 calc(5% + 2px);
     width: 100%;
     height: 3.8rem;
     color: #051811;

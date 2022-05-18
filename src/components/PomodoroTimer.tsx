@@ -1,14 +1,118 @@
 import { h } from 'preact';
-import { useState } from 'preact/hooks';
+import {
+  StateUpdater,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'preact/hooks';
+import { formatTimer } from '../utils/TimerUtils';
 import styles from '../styles/pomodoro.module.scss';
+import workerString from '../timer.js?raw';
+const workerBlob = new Blob([workerString], { type: 'text/javascript' });
+const workerUrl = URL.createObjectURL(workerBlob);
+const createWorker = () => new Worker(workerUrl, { type: 'classic' });
 
+type TimerType = {
+  buttons: string[];
+  active: number;
+};
+interface IToggleableButtons {
+  buttons: TimerType;
+  activeClass: string;
+  setButtons: StateUpdater<TimerType>;
+}
+const initialButtons: TimerType = {
+  buttons: ['Pomodoro', 'Short break', 'Long break'],
+  active: 0,
+};
+
+const ToggleableButtons = ({
+  buttons,
+  activeClass,
+  setButtons,
+}: IToggleableButtons) => {
+  return (
+    <>
+      {buttons.buttons.map((button, index) => {
+        return (
+          <button
+            class={buttons.active == index ? activeClass : ''}
+            onClick={() => setButtons({ ...buttons, active: index })}
+          >
+            {button}
+          </button>
+        );
+      })}
+    </>
+  );
+};
+
+type Timer = {
+  time: number;
+  ticking: boolean;
+};
+const initialTimer = {
+  time: 25 * 60,
+  ticking: false,
+};
 const PomodoroTimer = () => {
+  const [buttons, setButtons] = useState<TimerType>(initialButtons);
+  const [timer, setTimer] = useState<Timer>(initialTimer);
+  const worker = useMemo(createWorker, [createWorker]);
+  const workerRef = useRef<Worker>(worker);
+
+  const startTimer = () => {
+    if (!timer.ticking) {
+      workerRef.current.postMessage('start-timer');
+      setTimer({ ...timer, ticking: true });
+    }
+  };
+
+  const stopTimer = () => {
+    if (timer.ticking) {
+      workerRef.current.postMessage('stop-timer');
+      setTimer({ ...timer, ticking: false });
+    }
+  };
+
+  const resetTimer = () => {
+    if (timer.ticking) {
+      workerRef.current.postMessage('reset-timer');
+      setTimer({ time: initialTimer.time, ticking: true });
+    }
+  };
+
+  useEffect(() => {
+    workerRef.current = worker;
+    worker.postMessage(['set-timer', timer.time]);
+    worker.onmessage = function (e) {
+      const result = e.data;
+      console.log('got', result, timer);
+      if (result === 'finish-timer') {
+        setTimer({ time: 0, ticking: false });
+      } else if (result[0] === 'tick-timer')
+        setTimer({ time: result[1], ticking: true });
+    };
+    const cleanup = () => {
+      worker.terminate();
+      setTimer(initialTimer);
+    };
+    return cleanup;
+  }, [worker]);
+
+  useEffect(() => {
+    console.log(timer);
+  }, [timer]);
+
   return (
     <div class={styles.pomodoro}>
       <div class={styles.timerType}>
-        <button class={styles.active}>Pomodoro</button>
-        <button>Short break</button>
-        <button>Long break</button>
+        <ToggleableButtons
+          buttons={buttons}
+          setButtons={setButtons}
+          activeClass={styles.active}
+        />
       </div>
       <svg
         class={styles.topConnect}
@@ -24,7 +128,7 @@ const PomodoroTimer = () => {
         />
       </svg>
       <div class={styles.timerDisplay}>
-        <p>25:00</p>
+        <p>{formatTimer(timer.time)}</p>
         <div></div>
       </div>
       <svg
@@ -42,7 +146,10 @@ const PomodoroTimer = () => {
       </svg>
 
       <div class={styles.timerControls}>
-        <button>
+        <button
+          onClick={resetTimer}
+          class={!timer.ticking ? styles.hidden : ''}
+        >
           <svg
             width="24"
             height="24"
@@ -56,17 +163,37 @@ const PomodoroTimer = () => {
             />
           </svg>
         </button>
-        <button>
-          <svg
-            width="24"
-            height="24"
-            viewBox="-2 0 14 21"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+        {!timer.ticking ? (
+          <button onClick={startTimer}>
+            <svg
+              width="24"
+              height="24"
+              viewBox="-2 0 14 21"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M0 0V20.4167L16.0417 10.2083L0 0Z" fill="white"></path>
+            </svg>
+          </button>
+        ) : (
+          <button
+            onClick={stopTimer}
+            class={!timer.ticking ? styles.hidden : ''}
           >
-            <path d="M0 0V20.4167L16.0417 10.2083L0 0Z" fill="white"></path>
-          </svg>
-        </button>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 19 21"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0.75 20.7084H6.58333V0.291687H0.75V20.7084ZM12.4167 0.291687V20.7084H18.25V0.291687H12.4167Z"
+                fill="white"
+              />
+            </svg>
+          </button>
+        )}
         <button>
           <svg
             width="24"
