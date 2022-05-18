@@ -1,10 +1,83 @@
 .pomodoro {
-  background-color: aqua;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   .timerType {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    width: 90%;
+    grid-template-columns: repeat(3, 1fr);
+    border-radius: 8px;
+    border: 3px solid #c3efbe;
+    background-color: #37cd98;
+    grid-gap: 6px;
+    padding: 6px;
+    height: 3rem;
+    button {
+      font-weight: 500;
+      &.active {
+        color: #fff;
+        background-color: #32bb8b;
+      }
+      width: 100%;
+      padding: 6px 12px;
+      border-radius: 4rem;
+      border: none;
+      color: #effffa;
+      background-color: transparent;
+    }
   }
   .timerDisplay {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 230px;
+    height: 230px;
+    background: linear-gradient(39.92deg, #a1e2b4 16.61%, #3ae7b3 82.49%);
+    border-radius: 50%;
+    border: 8px solid #c3efbe;
+    margin: 12px 0 4px 0;
+    p {
+      font-weight: 700;
+      font-size: 3.4rem;
+      letter-spacing: 2px;
+    }
   }
-  button {
-    background-color: greenyellow;
+  .timerControls {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    button {
+      &:nth-child(2) {
+        width: 4.2rem;
+        height: 4.2rem;
+        margin: 0 1rem;
+        border: 6px solid #c3efbe;
+      }
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      border: 4px solid #c3efbe;
+      color: white;
+      background: linear-gradient(39.92deg, #9ad0aa 16.61%, #00ca8e 82.49%);
+    }
+  }
+  .topConnect {
+    position: absolute;
+    top: 3rem;
+  }
+  .bottomConnect {
+    position: absolute;
+    bottom: 2.8rem;
   }
 }
