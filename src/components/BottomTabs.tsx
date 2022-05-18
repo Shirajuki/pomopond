@@ -7,13 +7,13 @@ interface IBottomTabs {
   setScreen: StateUpdater<number>;
 }
 interface ITabIcon {
-  tab: string;
-  color: string;
+  tab: number;
 }
 
-const TabIcon = ({ tab, color }: ITabIcon) => {
+const TabIcon = ({ tab }: ITabIcon) => {
+  const color = '#C4C4C4';
   switch (tab) {
-    case 'Pomodoro':
+    case ScreenEnum.Pomodoro:
       return (
         <svg
           width="25"
@@ -31,7 +31,7 @@ const TabIcon = ({ tab, color }: ITabIcon) => {
           />
         </svg>
       );
-    case 'Calendar':
+    case ScreenEnum.Calendar:
       return (
         <svg
           width="25"
@@ -46,7 +46,7 @@ const TabIcon = ({ tab, color }: ITabIcon) => {
           <path d="M4 8H21" stroke="white" />
         </svg>
       );
-    case 'Gallery':
+    case ScreenEnum.Gallery:
       return (
         <svg
           width="23"
@@ -72,7 +72,7 @@ const TabIcon = ({ tab, color }: ITabIcon) => {
           </defs>
         </svg>
       );
-    case 'Settings':
+    case ScreenEnum.Settings:
       return (
         <svg
           width="24"
@@ -98,13 +98,14 @@ const BottomTabs = ({ screen, setScreen }: IBottomTabs) => {
       {Object.keys(ScreenEnum)
         .filter((v) => isNaN(Number(v)) && v != 'Login')
         .map((key, index) => {
+          const tab = Object.values(ScreenEnum).indexOf(key);
           return (
             <div
-              class={`tabs ${screen == index ? 'active' : ''}`}
+              class={`tabs ${screen == tab ? 'active' : ''}`}
               key={index}
-              onClick={() => screen != index && setScreen(index)}
+              onClick={() => screen != tab && setScreen(tab)}
             >
-              <TabIcon tab={key} color={'#C4C4C4'} />
+              <TabIcon tab={tab} />
               <p>{key}</p>
             </div>
           );
