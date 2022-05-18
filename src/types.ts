@@ -1,11 +1,14 @@
 export enum ScreenEnum {
-  Login = 0,
-  Pomodoro = 1,
-  Calendar = 2,
-  Gallery = 3,
-  Settings = 4,
+  Login,
+  Pomodoro,
+  Calendar,
+  Gallery,
+  Settings,
 }
 export enum PopupEnum {
-  Stats = 0,
-  Profile = 0,
+  Stats,
+  Profile,
 }
+export type IconType = {
+  color?: string;
+};

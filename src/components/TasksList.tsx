@@ -4,9 +4,9 @@ import styles from '../styles/taskslist.module.scss';
 
 const TasksList = () => {
   return (
-    <>
-      <div class={styles.tasks}>test</div>
-    </>
+    <div class={styles.tasks}>
+      <p></p>
+    </div>
   );
 };
 export default TasksList;

@@ -7,6 +7,7 @@ import {
   useState,
 } from 'preact/hooks';
 import { formatTimer } from '../utils/TimerUtils';
+import { ReplayIcon, ForwardIcon, PlayIcon, StopIcon } from './icons';
 import styles from '../styles/pomodoro.module.scss';
 import workerString from '../timer.js?raw';
 const workerBlob = new Blob([workerString], { type: 'text/javascript' });
@@ -150,60 +151,22 @@ const PomodoroTimer = () => {
           onClick={resetTimer}
           class={!timer.ticking ? styles.hidden : ''}
         >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M12 5V1L7 6L12 11V7C15.31 7 18 9.69 18 13C18 16.31 15.31 19 12 19C8.69 19 6 16.31 6 13H4C4 17.42 7.58 21 12 21C16.42 21 20 17.42 20 13C20 8.58 16.42 5 12 5Z"
-              fill="white"
-            />
-          </svg>
+          <ReplayIcon />
         </button>
         {!timer.ticking ? (
           <button onClick={startTimer}>
-            <svg
-              width="24"
-              height="24"
-              viewBox="-2 0 14 21"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M0 0V20.4167L16.0417 10.2083L0 0Z" fill="white"></path>
-            </svg>
+            <PlayIcon />
           </button>
         ) : (
           <button
             onClick={stopTimer}
             class={!timer.ticking ? styles.hidden : ''}
           >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 19 21"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M0.75 20.7084H6.58333V0.291687H0.75V20.7084ZM12.4167 0.291687V20.7084H18.25V0.291687H12.4167Z"
-                fill="white"
-              />
-            </svg>
+            <StopIcon />
           </button>
         )}
         <button>
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M6 18L14.5 12L6 6V18ZM16 6V18H18V6H16Z" fill="white" />
-          </svg>
+          <ForwardIcon />
         </button>
       </div>
     </div>
