@@ -4,4 +4,48 @@
   width: 90%;
   margin-top: 1.6rem;
   border-radius: 6px;
+  padding: 0;
+  .taskTitle {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 3rem;
+    color: #051811;
+    font-size: 1rem;
+    p {
+      font-size: 1.2rem;
+      padding: 8px;
+      margin: 0;
+      text-transform: uppercase;
+    }
+    .buttons {
+      padding: 8px;
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+      button {
+        display: flex;
+        align-items: center;
+        background: linear-gradient(39.92deg, #9ad0aa 16.61%, #00ca8e 82.49%);
+        border-radius: 4px;
+        border: none;
+        width: auto;
+        height: 1.9rem;
+        margin-left: 0.8rem;
+        span {
+          width: 2.4rem;
+          margin-left: 0.2rem;
+          font-weight: 800;
+          color: #e6fff8;
+          text-align: right;
+        }
+      }
+    }
+  }
+  .taskWrapper {
+    button {
+      width: 100%;
+      height: 3rem;
+    }
+  }
 }
