@@ -9,7 +9,7 @@ body {
   padding: 0;
   margin: 0;
   background: #fafafa;
-  font-family: "Helvetica Neue", arial, sans-serif;
+  font-family: 'Helvetica Neue', arial, sans-serif;
   font-weight: 400;
   color: #444;
   -webkit-font-smoothing: antialiased;
@@ -24,7 +24,37 @@ body {
   font-size: 1.5em;
   padding-top: 100px;
 
-  .link {
-    color: #fff;
+  .bottomTabs {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    padding: 0 0.4rem;
+    background: #ffffff;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 15px 15px 0px 0px;
+    .tabs {
+      padding: 0.6rem;
+      color: #acacac;
+      &,
+      * {
+        transition: color 0.3s, fill 0.3s;
+      }
+      p {
+        padding: 0;
+        margin: 0;
+        font-size: 0.8rem;
+      }
+    }
+    .active {
+      color: #07b07d;
+      circle,
+      rect,
+      path {
+        fill: #07b07d;
+      }
+    }
   }
 }
