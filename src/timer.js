@@ -17,7 +17,13 @@ self.addEventListener('message', (e) => {
   const result = e.data;
   //console.log('Worker: Message received from main script::', result);
 
-  if (result === 'start-timer') {
+  if (result === 'stop-timer' || result === 'reset-timer') {
+    if (timerInt) clearInterval(timerInt);
+  }
+  if (result === 'reset-timer') {
+    timer.set(timer.initTime);
+  }
+  if (result === 'start-timer' || result === 'reset-timer') {
     timerInt = setInterval(() => {
       if (timer.time > 0) {
         timer.tick();
@@ -27,11 +33,8 @@ self.addEventListener('message', (e) => {
         postMessage('finish-timer');
       }
     }, 1000);
-  } else if (result === 'stop-timer') {
-    if (timerInt) clearInterval(timerInt);
-  } else if (result === 'reset-timer') {
-    timer.set(timer.initTime);
-  } else if (result[0] === 'set-timer') {
+  }
+  if (result[0] === 'set-timer') {
     timer.set(+result[1]);
   }
 });

@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import {
   LoginScreen,
   PomodoroScreen,
@@ -50,6 +50,10 @@ const PopupHandler = ({ popup }: IPopupHandler) => {
 export const App = () => {
   const [screen, setScreen] = useState(1);
   const [popups, setPopups] = useState<Number[]>([]);
+  useEffect(() => {
+    document.title = ScreenEnum[screen];
+  }, [screen]);
+
   return (
     <>
       {popups.map((popup) => (

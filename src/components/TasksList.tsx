@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { useState } from 'preact/hooks';
 import styles from '../styles/taskslist.module.scss';
-import { ProfileIcon } from './icons';
+import { AddIcon, OptionsIcon } from './icons';
 
 const TasksList = () => {
   return (
@@ -10,13 +10,16 @@ const TasksList = () => {
         <p>Tasks</p>
         <div class={styles.buttons}>
           <button>
-            <ProfileIcon />
+            <OptionsIcon />
           </button>
         </div>
       </div>
       <div class={styles.taskWrapper}>
         <div></div>
-        <button>Add task</button>
+        <button>
+          <AddIcon />
+          Add task
+        </button>
       </div>
     </div>
   );

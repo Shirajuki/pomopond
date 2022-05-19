@@ -1,11 +1,11 @@
 import { h } from 'preact';
 import { useState } from 'preact/hooks';
 
-const Test = () => {
+const Popup = () => {
   return (
     <>
-      <div>test</div>
+      <div>tobe popup component</div>
     </>
   );
 };
-export default Test;
+export default Popup;

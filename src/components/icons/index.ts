@@ -10,6 +10,10 @@ export { default as ReplayIcon } from './ReplayIcon';
 export { default as ForwardIcon } from './ForwardIcon';
 export { default as StopIcon } from './StopIcon';
 
+// TasksList
+export { default as OptionsIcon } from './OptionsIcon';
+export { default as AddIcon } from './AddIcon';
+
 // BottomTabs
 export { default as PomodoroIcon } from './PomodoroIcon';
 export { default as CalendarIcon } from './CalendarIcon';

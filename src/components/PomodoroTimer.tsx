@@ -89,7 +89,6 @@ const PomodoroTimer = () => {
     worker.postMessage(['set-timer', timer.time]);
     worker.onmessage = function (e) {
       const result = e.data;
-      console.log('got', result, timer);
       if (result === 'finish-timer') {
         setTimer({ time: 0, ticking: false });
       } else if (result[0] === 'tick-timer')
@@ -104,6 +103,7 @@ const PomodoroTimer = () => {
 
   useEffect(() => {
     console.log(timer);
+    document.title = `${formatTimer(timer.time)} - Pomopond!`;
   }, [timer]);
 
   return (
