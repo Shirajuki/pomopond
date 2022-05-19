@@ -1,4 +1,4 @@
-<h1 align="center">POMOPOND</h1>
+<h1 align="center">POMOPOND 🌊📖</h1>
 
 <p align="center">
 <i>This project was bootstrapped with <a href="https://vitejs.dev/guide/#scaffolding-your-first-vite-project">vite</a></i>
@@ -15,11 +15,12 @@ https://www.figma.com/file/Mcss1pk0YR7spZOaJtj2IU/Pomodoro-app?node-id=0%3A1
 
 - JavaScript / TypeScript
 - Preact framework
-- HTML5
-- CSS3
 - LocalStorage API
-- Service Workers (PWA)
 - Vite
+- Service Workers (PWA)
+- Web Workers
+- SCSS
+- Supabase
 
 ## License
 
