@@ -16,6 +16,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+button {
+  cursor: pointer;
+}
+
 #app {
   height: 100%;
   text-align: center;
@@ -94,6 +98,8 @@ body {
     .tabs {
       padding: 0.6rem;
       color: #acacac;
+      border: none;
+      background-color: transparent;
       &,
       * {
         transition: color 0.3s, fill 0.3s;

@@ -34,14 +34,14 @@ const BottomTabs = ({ screen, setScreen }: IBottomTabs) => {
         .map((key, index) => {
           const tab = Object.values(ScreenEnum).indexOf(key);
           return (
-            <div
+            <button
               class={`tabs ${screen == tab ? 'active' : ''}`}
               key={index}
               onClick={() => screen != tab && setScreen(tab)}
             >
               <TabIcon tab={tab} />
               <p>{key}</p>
-            </div>
+            </button>
           );
         })}
     </div>
