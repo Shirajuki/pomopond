@@ -1,7 +1,6 @@
 class Timer {
   constructor(secs) {
-    this.initTime = secs;
-    this.time = this.initTime;
+    this.time = secs;
   }
   set(time) {
     this.time = time;
@@ -17,13 +16,10 @@ self.addEventListener('message', (e) => {
   const result = e.data;
   //console.log('Worker: Message received from main script::', result);
 
-  if (result === 'stop-timer' || result === 'reset-timer') {
+  if (result === 'stop-timer' || result[0] === 'reset-timer') {
     if (timerInt) clearInterval(timerInt);
   }
-  if (result === 'reset-timer') {
-    timer.set(timer.initTime);
-  }
-  if (result === 'start-timer' || result === 'reset-timer') {
+  if (result === 'start-timer' || result[0] === 'reset-timer') {
     timerInt = setInterval(() => {
       if (timer.time > 0) {
         timer.tick();
@@ -34,7 +30,7 @@ self.addEventListener('message', (e) => {
       }
     }, 1000);
   }
-  if (result[0] === 'set-timer') {
+  if (result[0] === 'set-timer' || result[0] === 'reset-timer') {
     timer.set(+result[1]);
   }
 });

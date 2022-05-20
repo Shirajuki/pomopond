@@ -12,3 +12,9 @@ export enum PopupEnum {
 export type IconType = {
   color?: string;
 };
+
+export enum PomodoroStatus {
+  Pomodoro,
+  ShortBreak,
+  LongBreak,
+}

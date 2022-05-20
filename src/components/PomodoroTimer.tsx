@@ -10,6 +10,7 @@ import { formatTimer } from '../utils/TimerUtils';
 import { ReplayIcon, ForwardIcon, PlayIcon, StopIcon } from './icons';
 import styles from '../styles/pomodoro.module.scss';
 import workerString from '../timer.js?raw';
+import { PomodoroStatus } from '../types';
 const workerBlob = new Blob([workerString], { type: 'text/javascript' });
 const workerUrl = URL.createObjectURL(workerBlob);
 const createWorker = () => new Worker(workerUrl, { type: 'classic' });
@@ -60,8 +61,35 @@ const initialTimer = {
 const PomodoroTimer = () => {
   const [buttons, setButtons] = useState<TimerType>(initialButtons);
   const [timer, setTimer] = useState<Timer>(initialTimer);
+  const [pomodoroStatus, setPomodoroStatus] = useState<PomodoroStatus>(
+    PomodoroStatus.Pomodoro
+  );
   const worker = useMemo(createWorker, [createWorker]);
   const workerRef = useRef<Worker>(worker);
+
+  const setPomodoroStatusCustom = (status: PomodoroStatus) => {
+    if (pomodoroStatus === status) return;
+    setPomodoroStatus(status);
+    switch (status) {
+      case PomodoroStatus.Pomodoro:
+        workerRef.current.postMessage('stop-timer');
+        workerRef.current.postMessage(['set-timer', initialTimer.time]);
+        setTimer({ time: initialTimer.time, ticking: false });
+        break;
+      case PomodoroStatus.ShortBreak:
+        workerRef.current.postMessage('stop-timer');
+        workerRef.current.postMessage(['set-timer', 5 * 60]);
+        setTimer({ time: 5 * 60, ticking: false });
+        break;
+      case PomodoroStatus.LongBreak:
+        workerRef.current.postMessage('stop-timer');
+        workerRef.current.postMessage(['set-timer', 15 * 60]);
+        setTimer({ time: 15 * 60, ticking: false });
+        break;
+      default:
+        break;
+    }
+  };
 
   const startTimer = () => {
     if (!timer.ticking) {
@@ -79,14 +107,14 @@ const PomodoroTimer = () => {
 
   const resetTimer = () => {
     if (timer.ticking) {
-      workerRef.current.postMessage('reset-timer');
+      workerRef.current.postMessage(['reset-timer', initialTimer.time]);
       setTimer({ time: initialTimer.time, ticking: true });
     }
   };
 
   useEffect(() => {
     workerRef.current = worker;
-    worker.postMessage(['set-timer', timer.time]);
+    workerRef.current.postMessage(['set-timer', timer.time]);
     worker.onmessage = function (e) {
       const result = e.data;
       if (result === 'finish-timer') {
@@ -105,6 +133,10 @@ const PomodoroTimer = () => {
     console.log(timer);
     document.title = `${formatTimer(timer.time)} - Pomopond!`;
   }, [timer]);
+
+  useEffect(() => {
+    setPomodoroStatusCustom(buttons.active);
+  }, [buttons]);
 
   return (
     <div class={styles.pomodoro}>
