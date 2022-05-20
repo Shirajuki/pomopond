@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { useState } from 'preact/hooks';
-import { HeaderNavigator } from '../components';
+import { HeaderBackground, HeaderNavigator } from '../components';
 
 const CalendarScreen = () => {
   const title = 'Calendar';
@@ -9,6 +9,7 @@ const CalendarScreen = () => {
     <>
       <div class="screen">
         <HeaderNavigator title={title} droplets={droplets} />
+        <HeaderBackground />
       </div>
     </>
   );

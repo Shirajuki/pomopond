@@ -39,7 +39,7 @@ button {
     height: 3.8rem;
     color: #051811;
     font-size: 1rem;
-
+    z-index: 1;
     .headerTitle {
       display: flex;
       align-items: center;
@@ -74,6 +74,17 @@ button {
         }
       }
     }
+  }
+  .headerBackground {
+    background: linear-gradient(31.82deg, #9df3b6 17.75%, #d9fff4 75.45%);
+    backdrop-filter: blur(4px);
+    width: 100%;
+    height: 160px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    border-bottom: 2px solid #37cd98;
   }
 
   .screen {
