@@ -112,6 +112,15 @@ const PomodoroTimer = () => {
     }
   };
 
+  const nextTimer = () => {
+    if (timer.ticking) {
+      setButtons({
+        ...buttons,
+        active: (buttons.active + 1) % buttons.buttons.length,
+      });
+    }
+  };
+
   useEffect(() => {
     workerRef.current = worker;
     workerRef.current.postMessage(['set-timer', timer.time]);
@@ -197,7 +206,7 @@ const PomodoroTimer = () => {
             <StopIcon />
           </button>
         )}
-        <button>
+        <button onClick={nextTimer}>
           <ForwardIcon />
         </button>
       </div>
