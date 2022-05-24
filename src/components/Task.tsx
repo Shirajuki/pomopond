@@ -1,3 +1,4 @@
+import styles from '../styles/taskslist.module.scss';
 import { Draggable } from 'react-beautiful-dnd';
 import { TaskType } from '../types';
 import { OptionsIcon } from './icons';
@@ -14,7 +15,9 @@ const Task = ({ task, index, updateTask }: TaskType) => {
       <PDraggable draggableId={task.id} index={index} key={task.id}>
         {(provided: any, snapshot: any) => (
           <div
-            className={`taskContent ${snapshot.isDragging ? 'dragging' : ''}`}
+            className={`${styles.taskDraggable} ${
+              snapshot.isDragging ? 'dragging' : ''
+            }`}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             ref={provided.innerRef}
@@ -27,7 +30,7 @@ const Task = ({ task, index, updateTask }: TaskType) => {
             <p>{task.text}</p>
 
             <button>
-              <OptionsIcon />
+              <OptionsIcon color="#6D6D6D" />
             </button>
           </div>
         )}

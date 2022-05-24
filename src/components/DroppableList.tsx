@@ -1,3 +1,4 @@
+import styles from '../styles/taskslist.module.scss';
 import { useState } from 'preact/hooks';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { TaskListType } from '../types';
@@ -12,6 +13,7 @@ type DroppableListType = {
 };
 const DroppableList = ({ list: initialList }: DroppableListType) => {
   const [list, setList] = useState<TaskListType[]>(initialList);
+
   const onDragEnd = (result: any) => {
     const { destination, source, draggableId } = result;
     if (!destination) return;
@@ -26,6 +28,7 @@ const DroppableList = ({ list: initialList }: DroppableListType) => {
     newTaskList.splice(destination.index, 0, list[source.index]);
     setList(newTaskList);
   };
+
   const updateTask = (index: number) => {
     const newTaskList = [...list];
     newTaskList.splice(index, 1, {
@@ -40,7 +43,7 @@ const DroppableList = ({ list: initialList }: DroppableListType) => {
         <PDroppable droppableId={'pomodoro_task'}>
           {(provided: any, snapshot: any) => (
             <div
-              className={`taskColumn ${
+              className={`${styles.taskColumn} ${
                 snapshot.isDraggingOver ? 'hovering' : ''
               }`}
               ref={provided.innerRef}
