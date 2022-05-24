@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { IconType } from '../../types';
 
 const SettingsIcon = ({ color = '#C4C4C4' }: IconType) => {

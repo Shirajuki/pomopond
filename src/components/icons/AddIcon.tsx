@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { IconType } from '../../types';
 
 const AddIcon = ({ color = '#00CA8E' }: IconType) => {

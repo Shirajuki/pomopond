@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { IconType } from '../../types';
 
 const PomodoroIcon = ({ color = '#C4C4C4' }: IconType) => {

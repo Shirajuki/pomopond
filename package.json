@@ -8,10 +8,13 @@
     "lint:script": "eslint --ext .ts,tsx --ignore-path .gitignore ."
   },
   "dependencies": {
-    "preact": "^10.5.15"
+    "preact": "^10.5.15",
+    "react-beautiful-dnd": "^13.1.0"
   },
   "devDependencies": {
+    "@preact/compat": "^17.0.3",
     "@preact/preset-vite": "^2.1.5",
+    "@types/react-beautiful-dnd": "^13.1.2",
     "@typescript-eslint/eslint-plugin": "^5.25.0",
     "@typescript-eslint/parser": "^5.25.0",
     "eslint": "^8.15.0",

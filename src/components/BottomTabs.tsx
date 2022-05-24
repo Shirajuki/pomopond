@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { StateUpdater } from 'preact/hooks';
 import { ScreenEnum } from '../types';
 import { CalendarIcon, GalleryIcon, PomodoroIcon, SettingsIcon } from './icons';

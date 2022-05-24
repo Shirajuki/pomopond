@@ -4,3 +4,5 @@ export { default as HeaderNavigator } from './HeaderNavigator';
 export { default as PomodoroTimer } from './PomodoroTimer';
 export { default as TasksList } from './TasksList';
 export { default as HeaderBackground } from './HeaderBackground';
+export { default as DroppableList } from './DroppableList';
+export { default as Task } from './Task';

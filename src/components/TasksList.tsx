@@ -1,8 +1,12 @@
-import { h } from 'preact';
-import { useState } from 'preact/hooks';
 import styles from '../styles/taskslist.module.scss';
+import DroppableList from './DroppableList';
 import { AddIcon, OptionsIcon } from './icons';
 
+const initialList = [
+  { id: '1', text: 'testing 12312312312', checked: false },
+  { id: '2', text: 'testasd totoot', checked: false },
+  { id: '3', text: 'testaaaa', checked: false },
+];
 const TasksList = () => {
   return (
     <div class={styles.tasks}>
@@ -15,7 +19,7 @@ const TasksList = () => {
         </div>
       </div>
       <div class={styles.taskWrapper}>
-        <div></div>
+        <DroppableList list={initialList} />
         <button>
           <AddIcon />
           Add task
