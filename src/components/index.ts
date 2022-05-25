@@ -6,3 +6,6 @@ export { default as TasksList } from './TasksList';
 export { default as HeaderBackground } from './HeaderBackground';
 export { default as DroppableList } from './DroppableList';
 export { default as Task } from './Task';
+
+export { default as StatsModal } from './StatsModal';
+export { default as ProfileModal } from './ProfileModal';

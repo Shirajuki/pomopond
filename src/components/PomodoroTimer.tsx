@@ -17,6 +17,8 @@ const createWorker = () => new Worker(workerUrl, { type: 'classic' });
 type TimerType = {
   buttons: string[];
   active: number;
+  interval: number;
+  breakInterval: number;
 };
 interface IToggleableButtons {
   buttons: TimerType;
@@ -26,6 +28,8 @@ interface IToggleableButtons {
 const initialButtons: TimerType = {
   buttons: ['Pomodoro', 'Short break', 'Long break'],
   active: 0,
+  interval: 0,
+  breakInterval: 4,
 };
 
 const ToggleableButtons = ({
@@ -65,6 +69,35 @@ const PomodoroTimer = () => {
   );
   const worker = useMemo(createWorker, [createWorker]);
   const workerRef = useRef<Worker>(worker);
+
+  const finishTimer = () => {
+    setTimer({ time: 0, ticking: false });
+    setButtons((buttons) => {
+      console.log(buttons);
+      const interval = (buttons.interval + 1) % buttons.breakInterval;
+      if (
+        buttons.active === PomodoroStatus.ShortBreak ||
+        buttons.active === PomodoroStatus.LongBreak
+      ) {
+        return {
+          ...buttons,
+          active: PomodoroStatus.Pomodoro,
+          interval,
+        };
+      } else {
+        const statusBreak =
+          buttons.interval + 1 === buttons.breakInterval
+            ? PomodoroStatus.LongBreak
+            : PomodoroStatus.ShortBreak;
+        return {
+          ...buttons,
+          active: statusBreak,
+          interval: buttons.interval,
+        };
+      }
+    });
+  };
+  const finishTimerRef = useRef(finishTimer);
 
   const setPomodoroStatusCustom = (status: PomodoroStatus) => {
     if (pomodoroStatus === status) return;
@@ -116,17 +149,19 @@ const PomodoroTimer = () => {
       setButtons({
         ...buttons,
         active: (buttons.active + 1) % buttons.buttons.length,
+        interval: (buttons.interval + 1) % buttons.breakInterval,
       });
     }
   };
 
   useEffect(() => {
+    finishTimerRef.current = finishTimer;
     workerRef.current = worker;
     workerRef.current.postMessage(['set-timer', timer.time]);
-    worker.onmessage = function (e) {
+    workerRef.current.onmessage = function (e) {
       const result = e.data;
       if (result === 'finish-timer') {
-        setTimer({ time: 0, ticking: false });
+        finishTimerRef.current();
       } else if (result[0] === 'tick-timer')
         setTimer({ time: result[1], ticking: true });
     };

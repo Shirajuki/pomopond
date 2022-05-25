@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { useEffect, useState } from 'preact/hooks';
+import { StateUpdater, useEffect, useState } from 'preact/hooks';
 import {
   LoginScreen,
   PomodoroScreen,
@@ -7,41 +7,58 @@ import {
   GalleryScreen,
   SettingsScreen,
 } from './screens';
-import { BottomTabs, Popup } from './components';
+import { BottomTabs, Popup, ProfileModal, StatsModal } from './components';
 import { ScreenEnum, PopupEnum } from './types';
 import './styles/index.scss';
 
 // MVC
 interface IScreenHandler {
   screen: Number;
+  setPopups: StateUpdater<PopupEnum[]>;
 }
 interface IPopupHandler {
   popup: Number;
+  setPopups: StateUpdater<PopupEnum[]>;
 }
 
-const ScreenHandler = ({ screen }: IScreenHandler) => {
+const ScreenHandler = ({ screen, setPopups }: IScreenHandler) => {
   switch (screen) {
     case ScreenEnum.Login:
-      return <LoginScreen />;
+      return <LoginScreen setPopups={setPopups} />;
     case ScreenEnum.Pomodoro:
-      return <PomodoroScreen />;
+      return <PomodoroScreen setPopups={setPopups} />;
     case ScreenEnum.Calendar:
-      return <CalendarScreen />;
+      return <CalendarScreen setPopups={setPopups} />;
     case ScreenEnum.Gallery:
-      return <GalleryScreen />;
+      return <GalleryScreen setPopups={setPopups} />;
     case ScreenEnum.Settings:
-      return <SettingsScreen />;
+      return <SettingsScreen setPopups={setPopups} />;
     default:
       return <></>;
   }
 };
 
-const PopupHandler = ({ popup }: IPopupHandler) => {
+const PopupHandler = ({ popup, setPopups }: IPopupHandler) => {
+  const closePopup = (closingPopup: PopupEnum) => {
+    setPopups((currentPopup) => currentPopup.filter((p) => p != closingPopup));
+  };
   switch (popup) {
     case PopupEnum.Stats:
-      return <Popup />;
+      return (
+        <Popup
+          children={<StatsModal />}
+          isFullscreen={true}
+          closePopup={() => closePopup(PopupEnum.Stats)}
+        />
+      );
     case PopupEnum.Profile:
-      return <Popup />;
+      return (
+        <Popup
+          children={<ProfileModal />}
+          isFullscreen={true}
+          closePopup={() => closePopup(PopupEnum.Profile)}
+        />
+      );
     default:
       return <></>;
   }
@@ -49,7 +66,7 @@ const PopupHandler = ({ popup }: IPopupHandler) => {
 
 export const App = () => {
   const [screen, setScreen] = useState(1);
-  const [popups, setPopups] = useState<Number[]>([]);
+  const [popups, setPopups] = useState<PopupEnum[]>([PopupEnum.Stats]);
   useEffect(() => {
     document.title = ScreenEnum[screen];
   }, [screen]);
@@ -57,9 +74,9 @@ export const App = () => {
   return (
     <>
       {popups.map((popup) => (
-        <PopupHandler popup={popup} />
+        <PopupHandler popup={popup} setPopups={setPopups} />
       ))}
-      <ScreenHandler screen={screen} />
+      <ScreenHandler screen={screen} setPopups={setPopups} />
       <BottomTabs screen={screen} setScreen={setScreen} />
     </>
   );

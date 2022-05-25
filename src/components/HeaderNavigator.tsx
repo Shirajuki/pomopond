@@ -1,8 +1,10 @@
+import { StateUpdater } from 'preact/hooks';
+import { PopupEnum } from '../types';
 import { CheckIcon, DropletIcon, ProfileIcon, StatsIcon } from './icons';
 
 interface IHeaderNavigator {
   title: string;
-  droplets: number;
+  setPopups?: StateUpdater<PopupEnum[]>;
 }
 interface IHeaderTitleIcon {
   title: string;
@@ -38,7 +40,15 @@ const HeaderTitleIcon = ({ title }: IHeaderTitleIcon) => {
   }
 };
 
-const HeaderNavigator = ({ title, droplets }: IHeaderNavigator) => {
+const HeaderNavigator = ({ title, setPopups }: IHeaderNavigator) => {
+  const droplets = 420;
+  const openPopup = (popup: PopupEnum) => {
+    if (setPopups)
+      setPopups((currentPopups) => [
+        ...currentPopups.filter((p) => p === popup),
+        popup,
+      ]);
+  };
   return (
     <>
       <div class="headerNavigator">
@@ -51,10 +61,10 @@ const HeaderNavigator = ({ title, droplets }: IHeaderNavigator) => {
             <DropletIcon />
             <span>{droplets}</span>
           </button>
-          <button>
+          <button onClick={() => openPopup(PopupEnum.Stats)}>
             <StatsIcon />
           </button>
-          <button>
+          <button onClick={() => openPopup(PopupEnum.Profile)}>
             <ProfileIcon />
           </button>
         </div>

@@ -1,0 +1,13 @@
+.popupWrapper {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+}
+.popupWrapper.fullscreen {
+  background-color: rgba(0, 0, 0, 0.4);
+}

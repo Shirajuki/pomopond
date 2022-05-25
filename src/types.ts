@@ -1,3 +1,5 @@
+import { StateUpdater } from 'preact/hooks';
+
 export enum ScreenEnum {
   Login,
   Pomodoro,
@@ -31,3 +33,7 @@ export type TaskType = {
   index: number;
   updateTask: (index: number) => void;
 };
+
+export interface Screen {
+  setPopups?: StateUpdater<PopupEnum[]>;
+}

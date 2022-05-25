@@ -1,13 +1,13 @@
 import { useState } from 'preact/hooks';
 import { HeaderBackground, HeaderNavigator } from '../components';
+import { Screen } from '../types';
 
-const CalendarScreen = () => {
+const CalendarScreen = ({ setPopups }: Screen) => {
   const title = 'Calendar';
-  const droplets = 420;
   return (
     <>
       <div class="screen">
-        <HeaderNavigator title={title} droplets={droplets} />
+        <HeaderNavigator title={title} setPopups={setPopups} />
         <HeaderBackground />
       </div>
     </>
