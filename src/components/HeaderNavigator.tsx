@@ -1,10 +1,12 @@
 import { StateUpdater } from 'preact/hooks';
-import { PopupEnum } from '../types';
+import { PopupEnum, PopupType } from '../types';
 import { CheckIcon, DropletIcon, ProfileIcon, StatsIcon } from './icons';
+import ProfileModal from './ProfileModal';
+import StatsModal from './StatsModal';
 
 interface IHeaderNavigator {
   title: string;
-  setPopups?: StateUpdater<PopupEnum[]>;
+  setPopups?: StateUpdater<PopupType[]>;
 }
 interface IHeaderTitleIcon {
   title: string;
@@ -42,12 +44,32 @@ const HeaderTitleIcon = ({ title }: IHeaderTitleIcon) => {
 
 const HeaderNavigator = ({ title, setPopups }: IHeaderNavigator) => {
   const droplets = 420;
-  const openPopup = (popup: PopupEnum) => {
-    if (setPopups)
-      setPopups((currentPopups) => [
-        ...currentPopups.filter((p) => p === popup),
-        popup,
-      ]);
+  const openPopup = (popupEnum: PopupEnum) => {
+    if (setPopups) {
+      let popup: PopupType;
+      switch (popupEnum) {
+        case PopupEnum.Profile:
+          popup = {
+            key: 'profile',
+            isFullscreen: true,
+            children: <ProfileModal />,
+          };
+          break;
+        case PopupEnum.Stats:
+        default:
+          popup = {
+            key: 'stats',
+            isFullscreen: true,
+            children: <StatsModal />,
+          };
+          break;
+      }
+      if (popup)
+        setPopups((currentPopups) => [
+          ...currentPopups.filter((p) => p.key === popup.key),
+          popup,
+        ]);
+    }
   };
   return (
     <>

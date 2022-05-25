@@ -7,18 +7,14 @@ import {
   GalleryScreen,
   SettingsScreen,
 } from './screens';
-import { BottomTabs, Popup, ProfileModal, StatsModal } from './components';
-import { ScreenEnum, PopupEnum } from './types';
+import { BottomTabs, Popup } from './components';
+import { ScreenEnum, PopupType } from './types';
 import './styles/index.scss';
 
 // MVC
 interface IScreenHandler {
   screen: Number;
-  setPopups: StateUpdater<PopupEnum[]>;
-}
-interface IPopupHandler {
-  popup: Number;
-  setPopups: StateUpdater<PopupEnum[]>;
+  setPopups: StateUpdater<PopupType[]>;
 }
 
 const ScreenHandler = ({ screen, setPopups }: IScreenHandler) => {
@@ -38,35 +34,13 @@ const ScreenHandler = ({ screen, setPopups }: IScreenHandler) => {
   }
 };
 
-const PopupHandler = ({ popup, setPopups }: IPopupHandler) => {
-  const closePopup = (closingPopup: PopupEnum) => {
-    setPopups((currentPopup) => currentPopup.filter((p) => p != closingPopup));
-  };
-  switch (popup) {
-    case PopupEnum.Stats:
-      return (
-        <Popup
-          children={<StatsModal />}
-          isFullscreen={true}
-          closePopup={() => closePopup(PopupEnum.Stats)}
-        />
-      );
-    case PopupEnum.Profile:
-      return (
-        <Popup
-          children={<ProfileModal />}
-          isFullscreen={true}
-          closePopup={() => closePopup(PopupEnum.Profile)}
-        />
-      );
-    default:
-      return <></>;
-  }
-};
-
 export const App = () => {
   const [screen, setScreen] = useState(1);
-  const [popups, setPopups] = useState<PopupEnum[]>([PopupEnum.Stats]);
+  const [popups, setPopups] = useState<PopupType[]>([]);
+
+  const closePopup = (popupKey: string) => {
+    setPopups((currentPopup) => currentPopup.filter((p) => p.key != popupKey));
+  };
   useEffect(() => {
     document.title = ScreenEnum[screen];
   }, [screen]);
@@ -74,7 +48,11 @@ export const App = () => {
   return (
     <>
       {popups.map((popup) => (
-        <PopupHandler popup={popup} setPopups={setPopups} />
+        <Popup
+          children={popup.children}
+          isFullscreen={popup.isFullscreen || false}
+          closePopup={() => closePopup(popup.key)}
+        />
       ))}
       <ScreenHandler screen={screen} setPopups={setPopups} />
       <BottomTabs screen={screen} setScreen={setScreen} />

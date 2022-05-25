@@ -1,3 +1,4 @@
+import { JSX } from 'preact';
 import { StateUpdater } from 'preact/hooks';
 
 export enum ScreenEnum {
@@ -11,6 +12,11 @@ export enum PopupEnum {
   Stats,
   Profile,
 }
+export type PopupType = {
+  key: string;
+  children: JSX.Element;
+  isFullscreen?: boolean;
+};
 
 export type IconType = {
   color?: string;
@@ -35,5 +41,5 @@ export type TaskType = {
 };
 
 export interface Screen {
-  setPopups?: StateUpdater<PopupEnum[]>;
+  setPopups?: StateUpdater<PopupType[]>;
 }

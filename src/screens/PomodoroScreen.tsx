@@ -9,7 +9,7 @@ const PomodoroScreen = ({ setPopups }: Screen) => {
       <div class="screen">
         <HeaderNavigator title={title} setPopups={setPopups} />
         <PomodoroTimer />
-        <TasksList />
+        {setPopups && <TasksList setPopups={setPopups} />}
       </div>
     </>
   );

@@ -1,6 +1,4 @@
-import { useState } from 'preact/hooks';
 import styles from '../styles/popup.module.scss';
-import { PopupEnum } from '../types';
 
 interface IPopup {
   children: Element | any;
@@ -8,11 +6,7 @@ interface IPopup {
   closePopup?: () => void;
 }
 
-const Popup = ({
-  children,
-  isFullscreen = false,
-  closePopup = undefined,
-}: IPopup) => {
+const Popup = ({ children, isFullscreen = false, closePopup }: IPopup) => {
   return (
     <>
       <div

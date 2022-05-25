@@ -1,5 +1,5 @@
 import styles from '../styles/taskslist.module.scss';
-import { useState } from 'preact/hooks';
+import { StateUpdater, useState } from 'preact/hooks';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { TaskListType } from '../types';
 import Task from './Task';
@@ -10,10 +10,9 @@ const PDroppable = Droppable as typeof Droppable & any;
 
 type DroppableListType = {
   list: TaskListType[];
+  setList: StateUpdater<TaskListType[]>;
 };
-const DroppableList = ({ list: initialList }: DroppableListType) => {
-  const [list, setList] = useState<TaskListType[]>(initialList);
-
+const DroppableList = ({ list, setList }: DroppableListType) => {
   const onDragEnd = (result: any) => {
     const { destination, source, draggableId } = result;
     if (!destination) return;
