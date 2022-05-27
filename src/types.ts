@@ -16,6 +16,8 @@ export type PopupType = {
   key: string;
   children: JSX.Element;
   isFullscreen?: boolean;
+  hasClosePopup?: boolean;
+  sticky?: boolean;
 };
 
 export type IconType = {

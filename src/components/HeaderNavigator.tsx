@@ -46,13 +46,18 @@ const HeaderNavigator = ({ title, setPopups }: IHeaderNavigator) => {
   const droplets = 420;
   const openPopup = (popupEnum: PopupEnum) => {
     if (setPopups) {
+      const closePopup = (popupKey: string) => {
+        setPopups((currentPopup) =>
+          currentPopup.filter((p) => p.key != popupKey)
+        );
+      };
       let popup: PopupType;
       switch (popupEnum) {
         case PopupEnum.Profile:
           popup = {
             key: 'profile',
             isFullscreen: true,
-            children: <ProfileModal />,
+            children: <ProfileModal closePopup={() => closePopup('profile')} />,
           };
           break;
         case PopupEnum.Stats:
@@ -60,6 +65,8 @@ const HeaderNavigator = ({ title, setPopups }: IHeaderNavigator) => {
           popup = {
             key: 'stats',
             isFullscreen: true,
+            hasClosePopup: true,
+            sticky: true,
             children: <StatsModal />,
           };
           break;

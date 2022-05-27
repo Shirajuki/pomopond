@@ -1,9 +1,10 @@
 import { useState } from 'preact/hooks';
+import styles from '../styles/popup.module.scss';
 
 const StatsModal = () => {
   return (
     <>
-      <div>Stats</div>
+      <div class={styles.modal}>Stats</div>
     </>
   );
 };

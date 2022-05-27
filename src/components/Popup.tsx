@@ -3,10 +3,16 @@ import styles from '../styles/popup.module.scss';
 interface IPopup {
   children: Element | any;
   isFullscreen?: boolean;
+  sticky?: boolean;
   closePopup?: () => void;
 }
 
-const Popup = ({ children, isFullscreen = false, closePopup }: IPopup) => {
+const Popup = ({
+  children,
+  isFullscreen = false,
+  sticky = false,
+  closePopup,
+}: IPopup) => {
   return (
     <>
       <div
@@ -14,7 +20,14 @@ const Popup = ({ children, isFullscreen = false, closePopup }: IPopup) => {
           isFullscreen ? styles.fullscreen : ''
         }`}
       >
-        {closePopup && <button onClick={closePopup}>X</button>}
+        {closePopup && sticky && (
+          <div class={styles.stickyCover} onClick={closePopup}></div>
+        )}
+        {closePopup && !sticky && (
+          <button class={styles.closePopup} onClick={closePopup}>
+            X
+          </button>
+        )}
         {children}
       </div>
     </>

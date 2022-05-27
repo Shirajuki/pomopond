@@ -51,7 +51,10 @@ export const App = () => {
         <Popup
           children={popup.children}
           isFullscreen={popup.isFullscreen || false}
-          closePopup={() => closePopup(popup.key)}
+          sticky={popup?.sticky}
+          closePopup={
+            popup?.hasClosePopup ? () => closePopup(popup.key) : undefined
+          }
         />
       ))}
       <ScreenHandler screen={screen} setPopups={setPopups} />

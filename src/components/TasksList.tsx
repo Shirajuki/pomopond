@@ -3,6 +3,7 @@ import DroppableList from './DroppableList';
 import { AddIcon, OptionsIcon } from './icons';
 import { PopupType, TaskListType } from '../types';
 import { StateUpdater, useState } from 'preact/hooks';
+import AddTask from './AddTask';
 
 const initialList = [
   { id: '1', text: 'testing 12312312312', checked: false },
@@ -13,30 +14,6 @@ interface ITasksList {
   setPopups: StateUpdater<PopupType[]>;
 }
 
-interface IAddTask {
-  setList: StateUpdater<TaskListType[]>;
-}
-
-const AddTask = ({ setList }: IAddTask) => {
-  const addTask = () => {
-    setList((currentList) => {
-      const task = {
-        id: String(Math.random()),
-        text: 'newboy',
-        checked: false,
-      };
-      return [...currentList, task];
-    });
-  };
-  return (
-    <>
-      <div>
-        <button onClick={addTask}>add task</button>
-      </div>
-    </>
-  );
-};
-
 const TasksList = ({ setPopups }: ITasksList) => {
   const [list, setList] = useState<TaskListType[]>(initialList);
 
@@ -44,6 +21,8 @@ const TasksList = ({ setPopups }: ITasksList) => {
     const popup = {
       key: 'addTask',
       isFullscreen: false,
+      hasClosePopup: true,
+      sticky: true,
       children: <AddTask setList={setList} />,
     };
     setPopups((currentPopups) => [

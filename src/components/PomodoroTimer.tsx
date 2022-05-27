@@ -146,11 +146,7 @@ const PomodoroTimer = () => {
 
   const nextTimer = () => {
     if (timer.ticking) {
-      setButtons({
-        ...buttons,
-        active: (buttons.active + 1) % buttons.buttons.length,
-        interval: (buttons.interval + 1) % buttons.breakInterval,
-      });
+      finishTimer();
     }
   };
 
@@ -170,10 +166,9 @@ const PomodoroTimer = () => {
       setTimer(initialTimer);
     };
     return cleanup;
-  }, [worker]);
+  }, [worker, finishTimerRef]);
 
   useEffect(() => {
-    console.log(timer);
     document.title = `${formatTimer(timer.time)} - Pomopond!`;
   }, [timer]);
 
@@ -225,6 +220,7 @@ const PomodoroTimer = () => {
         <button
           onClick={resetTimer}
           class={!timer.ticking ? styles.hidden : ''}
+          disabled={!timer.ticking}
         >
           <ReplayIcon />
         </button>
@@ -233,14 +229,15 @@ const PomodoroTimer = () => {
             <PlayIcon />
           </button>
         ) : (
-          <button
-            onClick={stopTimer}
-            class={!timer.ticking ? styles.hidden : ''}
-          >
+          <button onClick={stopTimer}>
             <StopIcon />
           </button>
         )}
-        <button onClick={nextTimer}>
+        <button
+          onClick={nextTimer}
+          class={!timer.ticking ? styles.hidden : ''}
+          disabled={!timer.ticking}
+        >
           <ForwardIcon />
         </button>
       </div>

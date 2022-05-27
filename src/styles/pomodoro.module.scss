@@ -71,6 +71,11 @@
       border: 4px solid #c3efbe;
       color: white;
       background: linear-gradient(39.92deg, #9ad0aa 16.61%, #00ca8e 82.49%);
+      transition: opacity 0.3s;
+    }
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
     }
   }
   .topConnect {
