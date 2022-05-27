@@ -61,7 +61,12 @@ const initialTimer = {
   time: 25 * 60,
   ticking: false,
 };
-const PomodoroTimer = () => {
+
+interface IPomodoroTimer {
+  zen: boolean;
+  setZen: StateUpdater<boolean>;
+}
+const PomodoroTimer = ({ zen, setZen }: IPomodoroTimer) => {
   const [buttons, setButtons] = useState<TimerType>(initialButtons);
   const [timer, setTimer] = useState<Timer>(initialTimer);
   const [pomodoroStatus, setPomodoroStatus] = useState<PomodoroStatus>(
@@ -176,8 +181,12 @@ const PomodoroTimer = () => {
     setPomodoroStatusCustom(buttons.active);
   }, [buttons]);
 
+  useEffect(() => {
+    console.log(zen);
+  }, [zen]);
+
   return (
-    <div class={styles.pomodoro}>
+    <div class={`${styles.pomodoro} ${zen ? styles.zen : ''}`}>
       <div class={styles.timerType}>
         <ToggleableButtons
           buttons={buttons}
@@ -198,7 +207,7 @@ const PomodoroTimer = () => {
           fill="#C3EFBE"
         />
       </svg>
-      <div class={styles.timerDisplay}>
+      <div class={styles.timerDisplay} onClick={() => setZen(!zen)}>
         <p>{formatTimer(timer.time)}</p>
         <div></div>
       </div>

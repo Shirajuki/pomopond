@@ -57,6 +57,8 @@ const HeaderNavigator = ({ title, setPopups }: IHeaderNavigator) => {
           popup = {
             key: 'profile',
             isFullscreen: true,
+            hasClosePopup: true,
+            sticky: true,
             children: <ProfileModal closePopup={() => closePopup('profile')} />,
           };
           break;

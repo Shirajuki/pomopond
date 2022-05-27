@@ -87,3 +87,15 @@
     bottom: 2.8rem;
   }
 }
+
+.pomodoro.zen {
+  .timerType {
+    opacity: 0;
+  }
+  .topConnect {
+    opacity: 0;
+  }
+  .bottomConnect {
+    opacity: 0;
+  }
+}

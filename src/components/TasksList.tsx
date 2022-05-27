@@ -20,7 +20,7 @@ const TasksList = ({ setPopups }: ITasksList) => {
   const openAddTaskPopup = () => {
     const popup = {
       key: 'addTask',
-      isFullscreen: false,
+      isFullscreen: true,
       hasClosePopup: true,
       sticky: true,
       children: <AddTask setList={setList} />,
