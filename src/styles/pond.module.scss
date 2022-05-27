@@ -1,0 +1,36 @@
+.pond {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  background: linear-gradient(31.82deg, #41a688 17.75%, #a9ffc1 75.45%);
+  backdrop-filter: blur(4px);
+  svg {
+    position: absolute;
+    &:first-of-type {
+      top: -50px;
+      left: -200px;
+    }
+
+    &:last-of-type {
+      bottom: -100px;
+      right: -200px;
+    }
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: radial-gradient(
+      98.86% 91.29% at 52.64% 57.14%,
+      rgba(119, 252, 212, 0) 0%,
+      #e7e7e7 100%
+    );
+    backdrop-filter: blur(1px);
+  }
+}

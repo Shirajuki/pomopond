@@ -8,6 +8,7 @@ export { default as ProfileModal } from './ProfileModal';
 
 export { default as PomodoroTimer } from './PomodoroTimer';
 export { default as TasksList } from './TasksList';
+export { default as Pond } from './Pond';
 export { default as Task } from './Task';
 export { default as AddTask } from './AddTask';
 export { default as DroppableList } from './DroppableList';

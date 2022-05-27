@@ -10,6 +10,7 @@ import { ReplayIcon, ForwardIcon, PlayIcon, StopIcon } from './icons';
 import styles from '../styles/pomodoro.module.scss';
 import workerString from '../timer.js?raw';
 import { PomodoroStatus } from '../types';
+import useStore from '../stores';
 const workerBlob = new Blob([workerString], { type: 'text/javascript' });
 const workerUrl = URL.createObjectURL(workerBlob);
 const createWorker = () => new Worker(workerUrl, { type: 'classic' });
@@ -62,16 +63,14 @@ const initialTimer = {
   ticking: false,
 };
 
-interface IPomodoroTimer {
-  zen: boolean;
-  setZen: StateUpdater<boolean>;
-}
-const PomodoroTimer = ({ zen, setZen }: IPomodoroTimer) => {
+const PomodoroTimer = () => {
   const [buttons, setButtons] = useState<TimerType>(initialButtons);
   const [timer, setTimer] = useState<Timer>(initialTimer);
   const [pomodoroStatus, setPomodoroStatus] = useState<PomodoroStatus>(
     PomodoroStatus.Pomodoro
   );
+  const zen = useStore((state) => state.zen);
+  const setZen = useStore((state) => state.setZen);
   const worker = useMemo(createWorker, [createWorker]);
   const workerRef = useRef<Worker>(worker);
 

@@ -1,4 +1,5 @@
 import { StateUpdater } from 'preact/hooks';
+import useStore from '../stores';
 import { ScreenEnum } from '../types';
 import { CalendarIcon, GalleryIcon, PomodoroIcon, SettingsIcon } from './icons';
 
@@ -26,6 +27,8 @@ const TabIcon = ({ tab }: ITabIcon) => {
 };
 
 const BottomTabs = ({ screen, setScreen }: IBottomTabs) => {
+  const zen = useStore((state) => state.zen);
+  if (zen) return <></>;
   return (
     <div class="bottomTabs">
       {Object.keys(ScreenEnum)

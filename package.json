@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "preact": "^10.5.15",
-    "react-beautiful-dnd": "^13.1.0"
+    "react-beautiful-dnd": "^13.1.0",
+    "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {
     "@preact/compat": "^17.0.3",
