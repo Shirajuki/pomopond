@@ -1,5 +1,5 @@
 import styles from '../styles/taskslist.module.scss';
-import { StateUpdater, useState } from 'preact/hooks';
+import { StateUpdater } from 'preact/hooks';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { TaskListType } from '../types';
 import Task from './Task';
